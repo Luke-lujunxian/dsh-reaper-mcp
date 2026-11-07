@@ -1,0 +1,17 @@
+--- a/reaper_mcp_bridge.lua
++++ b/reaper_mcp_bridge.lua
+@@ -15,7 +15,13 @@
+     return
+ end
+ 
+-local bridge_dir = reaper.GetResourcePath() .. '/Scripts/mcp_bridge_data/'
++-- PATCHED (dsh-reaper-mcp): the mailbox is REAPER_BRIDGE_DIR when that env
++-- variable is set, otherwise REAPER's standard Scripts/mcp_bridge_data --
++-- identical to stock behaviour when the variable is unset. Both halves of the
++-- protocol therefore agree on the directory instead of only the server honouring it.
++local bridge_dir = os.getenv('REAPER_BRIDGE_DIR')
++  or (reaper.GetResourcePath() .. '/Scripts/mcp_bridge_data/')
++if bridge_dir:sub(-1) ~= '/' then bridge_dir = bridge_dir .. '/' end
+ 
+ -- Create bridge directory if it doesn't exist
+ local function ensure_dir()

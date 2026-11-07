@@ -1,0 +1,12 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# pull of the upstream project used by install.ps1 / install.sh
+upstream/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
